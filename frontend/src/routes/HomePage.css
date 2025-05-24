@@ -1,0 +1,13 @@
+/* Rotating text animation */
+.rotate-text textPath {
+    animation: rotate-text 10s linear infinite;
+  }
+  
+  @keyframes rotate-text {
+    0% {
+      startOffset: 0%;
+    }
+    100% {
+      startOffset: 100%;
+    }
+  }

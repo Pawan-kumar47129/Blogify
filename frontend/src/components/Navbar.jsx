@@ -4,80 +4,97 @@ import { Link, NavLink } from "react-router";
 import {
   SignedIn,
   SignedOut,
-  SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
-
+import Image from "./Image";
 function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <div className="w-full h-16 flex items-center justify-between">
+    <div className="bg-white h-16 flex items-center justify-between px-4 md:px-8 lg:px-16 xl:px-32 shadow-md z-50 fixed top-0 w-full">
       {/* Logo */}
       <Link to="/">
-        <div className="flex items-center gap-2 text-2xl font-bold">
-          {/* <img src="/logo.png" className="size-8 rounded-2xl" alt="logo"  /> */}
-          <IKImage
+        <div className="flex items-center gap-2 text-2xl font-bold text-blue-800">
+          {/* <IKImage
             urlEndpoint={import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT}
             src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
-            className="size-8 rounded-2xl"
+            className="w-10 h-10 rounded-full"
             alt="logo"
-          />
+          /> */}
+          <Image src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
+            className="w-10 h-10 rounded-full"/>
           <span>BlogApp</span>
         </div>
       </Link>
-      {/* mobile menu */}
+
+      {/* Mobile Menu */}
       <div className="md:hidden">
         <div
-          className="cursor-pointer text-2xl "
+          className="cursor-pointer text-2xl text-gray-700"
           onClick={() => setOpen((prev) => !prev)}
         >
           {open ? "✖" : "☰"}
         </div>
         {/* Mobile Link List */}
         <div
-          className={`w-full h-screen flex flex-col items-center justify-center absolute transition-all ease-in-out top-16 bg-red-500 gap-8  text-xl font-medium ${
-            open ? "-right-0" : "-right-[100%]"
+          className={`w-full h-screen flex flex-col items-center justify-center absolute transition-all ease-in-out top-16 bg-gray-800 text-white gap-8 text-xl font-medium ${
+            open ? "right-0" : "-right-full"
           }`}
         >
-          <a href="/">Home</a>
-          <a href="/">Tending</a>
-          <a href="/">Most Popular</a>
-          <a href="/">About</a>
-          <button className="bg-blue-400 text-white px-4 py-2 rounded-xl">
+          <a href="/" className="hover:text-blue-400 transition-colors">
+            Home
+          </a>
+          <a href="/" className="hover:text-blue-400 transition-colors">
+            Trending
+          </a>
+          <a href="/" className="hover:text-blue-400 transition-colors">
+            Most Popular
+          </a>
+          <a href="/" className="hover:text-blue-400 transition-colors">
+            About
+          </a>
+          <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
             Login
           </button>
         </div>
       </div>
 
-      {/* Desktop */}
-      <div className="hidden md:flex gap-4 lg:gap-8 items-center text-xl font-medium">
+      {/* Desktop Menu */}
+      <div className="hidden md:flex gap-6 lg:gap-10 items-center text-lg font-medium text-gray-700">
         <NavLink
           to="/"
-          className={(isActive) => (isActive ? "text-blue-500" : "bg-black")}
+          className={({ isActive }) =>
+            isActive ? "text-blue-500 font-semibold" : "hover:text-blue-500"
+          }
         >
           Home
         </NavLink>
         <NavLink
           to="/"
-          className={(isActive) => (isActive ? "text-blue-500" : "")}
+          className={({ isActive }) =>
+            isActive ? "text-blue-500 font-semibold" : "hover:text-blue-500"
+          }
         >
-          Tending
+          Trending
         </NavLink>
         <NavLink
           to="/"
-          className={(isActive) => (isActive ? "text-blue-500" : "")}
+          className={({ isActive }) =>
+            isActive ? "text-blue-500 font-semibold" : "hover:text-blue-500"
+          }
         >
           Most Popular
         </NavLink>
         <NavLink
           to="/"
-          className={(isActive) => (isActive ? "text-blue-500" : "")}
+          className={({ isActive }) =>
+            isActive ? "text-blue-500 font-semibold" : "hover:text-blue-500"
+          }
         >
           About
         </NavLink>
         <SignedOut>
           <NavLink to="login">
-            <button className="bg-blue-400 text-white px-4 py-2 rounded-xl">
+            <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
               Login
             </button>
           </NavLink>
