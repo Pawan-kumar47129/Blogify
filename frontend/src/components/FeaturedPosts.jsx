@@ -8,7 +8,7 @@ const FeaturedPosts = () => {
       <div className="w-full lg:w-1/2 flex flex-col gap-4">
         {/* image */}
         <Image
-          src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
+          src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
           className=" rounded-xl object-cover"
         />
         {/* details */}
@@ -28,7 +28,7 @@ const FeaturedPosts = () => {
         {/* second */}
         <div className=" lg:h-1/3 flex justify-between gap-4">
           <Image
-            src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
+            src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
             className=" rounded-xl object-cover w-1/3 aspect-video"
           />
           {/* details and title */}
@@ -50,7 +50,7 @@ const FeaturedPosts = () => {
         {/* third */}
         <div className=" lg:h-1/3 flex justify-between gap-4">
           <Image
-            src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
+            src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
             className=" rounded-xl object-cover w-1/3 aspect-video"
           />
           {/* details and title */}
@@ -72,7 +72,7 @@ const FeaturedPosts = () => {
         {/* fourth */}
         <div className=" lg:h-1/3 flex justify-between gap-4">
           <Image
-            src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
+            src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
             className=" rounded-xl object-cover w-1/3 aspect-video"
           />
           {/* details and title */}

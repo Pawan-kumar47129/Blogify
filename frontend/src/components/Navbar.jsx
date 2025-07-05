@@ -20,7 +20,7 @@ function Navbar() {
             className="w-10 h-10 rounded-full"
             alt="logo"
           /> */}
-          <Image src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
+          <Image src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
             className="w-10 h-10 rounded-full"/>
           <span>BlogApp</span>
         </div>

@@ -10,13 +10,13 @@ services:
       -mongo-data:/data/db
 
   backend:
-    build: ./backend    
+    build: ./backend
     conatiner_name: backend
     ports:
      - "5000:5000"
     volumes:
       - ./backend:/app
-      - /app/node_modules   
+      - /app/node_modules
     env_file:
       - ./backend/.env
     depends_on:
@@ -27,8 +27,8 @@ services:
     ports:
       - "3000:80"
     env_file:
-      - ./frontend/.env  
+      - ./frontend/.env
     depends_on:
       - backend
 volumes:
-  mongo-data:                
+  mongo-data:

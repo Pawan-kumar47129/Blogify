@@ -31,7 +31,7 @@ const SinglePostPage = () => {
         </div>
         <div className="hidden lg:block lg:w-2/5">
           <Image
-            src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
+            src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
             className="rounded-xl shadow-lg"
           />
         </div>
@@ -114,7 +114,7 @@ const SinglePostPage = () => {
           <h2 className="text-lg font-semibold text-gray-800">Author</h2>
           <div className="flex items-center gap-4 mt-4">
             <Image
-              src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
+              src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
               className="rounded-full w-12 h-12 object-cover shadow-md"
             />
             <Link className="text-blue-600 hover:underline font-medium">

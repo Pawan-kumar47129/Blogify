@@ -1,9 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
 import postModel from "../models/post.model.js";
 import userModel from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-
+import ImageKit from "imagekit"
 export const getPosts = asyncHandler(async (req,res) => {
   const posts = await postModel.find({});
   console.log("hello");
@@ -58,15 +60,20 @@ export const deletePost=asyncHandler(async(req,res)=>{
   return res.status(200).json(new ApiResponse(200,"Post deleted successfull",post));
 });
 const imagekit = new ImageKit({
-  urlEndpoint: 'https://ik.imagekit.io/vbygr1pkk0/blog>', // https://ik.imagekit.io/your_imagekit_id
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY
 });
 
-app.get('/auth', function (req, res) {
-  // Your application logic to authenticate the user
-  // For example, you can check if the user is logged in or has the necessary permissions
-  // If the user is not authenticated, you can return an error response
-  const { token, expire, signature } = imagekit.getAuthenticationParameters();
-  res.send({ token, expire, signature, publicKey: process.env.IMAGEKIT_PUBLIC_KEY });
-});
+// app.get('/auth', function (req, res) {
+//   // Your application logic to authenticate the user
+//   // For example, you can check if the user is logged in or has the necessary permissions
+//   // If the user is not authenticated, you can return an error response
+//   const { token, expire, signature } = imagekit.getAuthenticationParameters();
+//   res.send({ token, expire, signature, publicKey: process.env.IMAGEKIT_PUBLIC_KEY });
+// });
+export const uploadAuth=async(req,res)=>{
+  console.log("called for validation");
+  const result=imagekit.getAuthenticationParameters();
+  res.send(result);
+}

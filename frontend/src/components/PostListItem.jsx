@@ -8,7 +8,7 @@ const PostListItem = () => {
       {/* Image */}
       <div className="md:hidden xl:block xl:w-1/3">
         <Image
-          src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
+          src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
           className="rounded-2xl object-cover"
         />
       </div>
