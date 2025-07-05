@@ -6,15 +6,19 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import ImageKit from "imagekit"
+import Post from "../models/post.model.js";
 export const getPosts = asyncHandler(async (req,res) => {
-  const posts = await postModel.find({});
-  console.log("hello");
+  const page=parseInt(req.query.page)||1;
+  const limit=parseInt(req.query.limit)||2;
+  const posts = await postModel.find().limit(limit).skip((page-1)*limit);
+  const totalPosts=await Post.countDocuments();
+  const hashMore=page*limit<totalPosts;
   if (posts.length == 0) {
     throw new ApiError(404, "No posts found");
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, "Posts get Successfully", posts));
+    .json(new ApiResponse(200, "Posts get Successfully", {posts,hashMore}));
 });
 
 export const getPost = asyncHandler(async (req, res) => {
