@@ -20,7 +20,8 @@ export const getPostComments = asyncHandler(async (req, res) => {
 
 export const addComment = asyncHandler(async (req, res) => {
   const { postId } = req.params;
-  const clerkUserId = req.auth.userId;
+  const clerkUserId = req.auth().userId;
+  console.log(clerkUserId);
   if (!clerkUserId) {
     throw new ApiError(400, "User is Not Authenticated!");
   }
@@ -31,14 +32,19 @@ export const addComment = asyncHandler(async (req, res) => {
     user: user._id,
   });
   const saveComment = await newComment.save();
-  return res
+  setTimeout(()=>{
+    return res
     .status(201)
     .json(new ApiResponse(201, "comments created successfully!", saveComment));
+  },3000)
+//   return res
+//     .status(201)
+//     .json(new ApiResponse(201, "comments created successfully!", saveComment));
 });
 
 export const deleteComment=asyncHandler(async(req,res)=>{
     const {commentId}=req.params;
-    const clerkUserId = req.auth.userId;
+    const clerkUserId = req.auth().userId;
   if (!clerkUserId) {
     throw new ApiError(400, "User is Not Authenticated!");
   }

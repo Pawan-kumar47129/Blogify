@@ -40,7 +40,7 @@ export const getPost = asyncHandler(async (req, res) => {
 });
 
 export const createPost = asyncHandler(async (req, res) => {
-  const clerkUserId = req.auth.userId;
+  const clerkUserId = req.auth().userId;;
   if (!clerkUserId) {
     throw new ApiError(401, "user Unauthorized!");
   }
@@ -65,7 +65,8 @@ export const createPost = asyncHandler(async (req, res) => {
 
 export const deletePost = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const user = await userModel.findOne({ clerkUserId: req.auth.userId });
+  const clerkUserId=req.auth().userId;
+  const user = await userModel.findOne({clerkUserId:clerkUserId});
   const post = await postModel.findOneAndDelete({ _id: id, user: user._id });
   if (!post) {
     throw new ApiError(403, "You can delete only your post");
