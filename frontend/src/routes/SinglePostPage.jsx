@@ -1,40 +1,53 @@
-import React from "react";
 import Image from "../components/Image";
-import { Link } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import PostMenuAction from "../components/PostMenuAction";
 import Search from "../components/Search";
 import Comments from "../components/Comments";
-
+import  {useQuery} from "@tanstack/react-query";
+import axios from "axios"
+import Loading from "../components/Loading"
+import { format } from "timeago.js";
+const fetchPost=async (slug)=>{
+  const res= await axios.get(`${import.meta.env.VITE_API_URL}/posts/${slug}`);
+  return res.data.data;
+}
 const SinglePostPage = () => {
+  const {slug}=useParams();
+  const navigate=useNavigate();
+  const {error,isPending,data}=useQuery({
+    queryKey:["post",slug],
+    queryFn:()=>fetchPost(slug)
+  });
+  if(isPending) return <Loading/>
+  if(error || !data) {
+    navigate("/page-not-found")
+  }
   return (
     <div className="flex flex-col gap-12 mt-8 px-4 md:px-8 lg:px-16 xl:px-32">
       {/* Post Details */}
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex flex-col gap-6 lg:w-3/5">
           <h1 className="text-2xl md:text-4xl xl:text-5xl font-bold text-gray-800 leading-tight">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi
-            molestiae qui labore, veniam quae nobis?
+            {data.title}
           </h1>
           <div className="flex items-center gap-2 text-gray-500 text-sm">
             <span>Written by</span>
-            <Link className="text-blue-600 hover:underline">Jone Doe</Link>
+            <Link className="text-blue-600 hover:underline">{data.user.username}</Link>
             <span>on</span>
-            <Link className="text-blue-600 hover:underline">Web Design</Link>
+            <Link className="text-blue-600 hover:underline">{data.category}</Link>
+            <span>{format(data.createdAt)}</span>
           </div>
           <p className="text-gray-600 leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam
-            corporis dignissimos corrupti dolor quod! Reprehenderit laudantium
-            temporibus animi, illum explicabo quo odit libero soluta fugiat,
-            voluptatem ipsam dolore magni accusantium dolorem hic dolor?
-            Laborum, laudantium?
+            {data.desc}
           </p>
         </div>
-        <div className="hidden lg:block lg:w-2/5">
-          <Image
-            src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
+        {data.img && <div className="hidden lg:block lg:w-2/5">
+           <Image
+            src={data.img}
+            width="600"
             className="rounded-xl shadow-lg"
           />
-        </div>
+        </div>}
       </div>
 
       {/* Post Content */}
@@ -114,11 +127,11 @@ const SinglePostPage = () => {
           <h2 className="text-lg font-semibold text-gray-800">Author</h2>
           <div className="flex items-center gap-4 mt-4">
             <Image
-              src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
+              src={data.user.img}
               className="rounded-full w-12 h-12 object-cover shadow-md"
             />
             <Link className="text-blue-600 hover:underline font-medium">
-              Jone Doe
+              {data.user.username}
             </Link>
           </div>
           <p className="text-gray-600 mt-4">
@@ -166,7 +179,7 @@ const SinglePostPage = () => {
           <Search />
         </div>
       </div>
-      <Comments/>
+      <Comments postId={data._id}/>
     </div>
   );
 };

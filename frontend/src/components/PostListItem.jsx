@@ -3,7 +3,7 @@ import Image from "./Image";
 import { Link } from "react-router";
 import {format} from "timeago.js"
 const PostListItem = ({post}) => {
-  console.log(post);
+  //console.log(post);
   return (
     <div className="flex flex-col xl:flex-row gap-8">
       {/* Image */}
@@ -21,20 +21,20 @@ const PostListItem = ({post}) => {
       )}
       {/* details */}
       <div className="flex flex-col gap-4 xl:w-2/3">
-        <Link to="/test" className="text-4xl font-semibold">
+        <Link to={`/posts/${post.slug}`} className="text-4xl font-semibold">
           {post.title}
         </Link>
         <div className="flex items-center gap-2 text-gray-400 text-sm">
           <span>Written by</span>
-          <Link className="text-blue-400">John Doe</Link>
+          <Link className="text-blue-400">{post.user.username}</Link>
           <span>on</span>
-          <Link className="text-blue-400">Web Design</Link>
+          <Link className="text-blue-400">{post.category}</Link>
           <span>{format(post.createdAt)}</span>
         </div>
         <p>
           {post.desc}
         </p>
-        <Link to={`/${post.slug}`} className=" underline text-blue-500">
+        <Link to={`/posts/${post.slug}`} className=" underline text-blue-500">
           Read more
         </Link>
       </div>

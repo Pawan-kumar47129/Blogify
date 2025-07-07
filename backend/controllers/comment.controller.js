@@ -37,14 +37,14 @@ export const addComment = asyncHandler(async (req, res) => {
     .status(201)
     .json(new ApiResponse(201, "comments created successfully!", saveComment));
   },3000)
-//   return res
-//     .status(201)
-//     .json(new ApiResponse(201, "comments created successfully!", saveComment));
+  return res
+    .status(201)
+    .json(new ApiResponse(201, "comments created successfully!", saveComment));
 });
 
 export const deleteComment=asyncHandler(async(req,res)=>{
     const {commentId}=req.params;
-    const clerkUserId = req.auth().userId;
+    const clerkUserId = req.auth.userId;
   if (!clerkUserId) {
     throw new ApiError(400, "User is Not Authenticated!");
   }

@@ -24,10 +24,12 @@ const Write = () => {
         (prev) => prev + `<p><iframe class="ql-video" src="${video.url}"/></p>`
       );
   }, [video]);
+
   const { isLoaded, isSignedIn } = useUser();
   const { getToken } = useAuth();
   const [value, setValue] = useState("");
   const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: async (newTodo) => {
       const token = await getToken();
@@ -59,11 +61,7 @@ const Write = () => {
     return <Loading />;
   }
   if (isLoaded && !isSignedIn) {
-    return (
-      <div className="text-center py-10 text-red-500 font-semibold">
-        You should login!
-      </div>
-    );
+    navigate("/login");
   }
   return (
     <div className="min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)] flex flex-col items-center py-8 px-2 bg-gray-50">

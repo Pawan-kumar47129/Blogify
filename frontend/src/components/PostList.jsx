@@ -3,6 +3,7 @@ import PostListItem from "./PostListItem";
 import { useInfiniteQuery,} from "@tanstack/react-query";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from "axios";
+import Loading from "./Loading";
 const fetchPosts = async (pageParam) => {
   const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts`, {
     params: { page: pageParam },
@@ -27,7 +28,7 @@ const PostList = () => {
   });
   if (status === "pending") return "Loading...";
   if (status === "error") return "An error has occurred: " + error.message;
-  if(isFetching) <p>Loding.....</p>
+  if(isFetching) return <Loading/>
   const allPosts = data?.pages?.flatMap((page) => page.data.posts) || [];
   return (
     <InfiniteScroll
