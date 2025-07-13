@@ -7,6 +7,7 @@ import  {useQuery} from "@tanstack/react-query";
 import axios from "axios"
 import Loading from "../components/Loading"
 import { format } from "timeago.js";
+import parser from "html-react-parser";
 const fetchPost=async (slug)=>{
   const res= await axios.get(`${import.meta.env.VITE_API_URL}/posts/${slug}`);
   return res.data.data;
@@ -120,6 +121,7 @@ const SinglePostPage = () => {
             iste exercitationem quibusdam impedit expedita cupiditate, similique
             consectetur.
           </p>
+          {parser(data.content)}
         </div>
 
         {/* Sidebar */}
@@ -154,7 +156,7 @@ const SinglePostPage = () => {
             </Link>
           </div>
           <div className="mt-6">
-            <PostMenuAction />
+            <PostMenuAction post={data}/>
           </div>
           <h1 className="mt-8 mb-4 text-sm font-medium">Categories</h1>
           <div className="flex flex-col gap-2 text-sm">

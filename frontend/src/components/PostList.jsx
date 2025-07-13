@@ -1,4 +1,3 @@
-import React from "react";
 import PostListItem from "./PostListItem";
 import { useInfiniteQuery,} from "@tanstack/react-query";
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -34,7 +33,7 @@ const PostList = () => {
     <InfiniteScroll
       dataLength={allPosts.length}
       next={fetchNextPage}
-      hasMore={!!hasNextPage}
+      hasMore={hasNextPage}
       loader={<h4>Loading...</h4>}
       endMessage={
         <p>

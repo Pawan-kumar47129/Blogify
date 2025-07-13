@@ -1,5 +1,4 @@
 import express from "express"
-import {requireAuth,getAuth} from "@clerk/express"
 import { getPost, getPosts,createPost,deletePost ,uploadAuth} from "../controllers/post.controller.js";
 const router=express.Router({mergeParams:true});
 

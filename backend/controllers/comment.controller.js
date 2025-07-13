@@ -12,7 +12,6 @@ export const getPostComments = asyncHandler(async (req, res) => {
     .find({ post: postId })
     .populate("user", "username img")
     .sort({ createdAt: -1 });
-  if (!comments.length) throw new ApiError(404, "comments not found");
   return res
     .status(200)
     .json(new ApiResponse(200, "All comments get successfully", comments));
@@ -21,7 +20,6 @@ export const getPostComments = asyncHandler(async (req, res) => {
 export const addComment = asyncHandler(async (req, res) => {
   const { postId } = req.params;
   const clerkUserId = req.auth().userId;
-  console.log(clerkUserId);
   if (!clerkUserId) {
     throw new ApiError(400, "User is Not Authenticated!");
   }
@@ -32,11 +30,6 @@ export const addComment = asyncHandler(async (req, res) => {
     user: user._id,
   });
   const saveComment = await newComment.save();
-  setTimeout(()=>{
-    return res
-    .status(201)
-    .json(new ApiResponse(201, "comments created successfully!", saveComment));
-  },3000)
   return res
     .status(201)
     .json(new ApiResponse(201, "comments created successfully!", saveComment));
