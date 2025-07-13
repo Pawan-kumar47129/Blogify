@@ -24,6 +24,7 @@ const PostMenuAction = ({ post }) => {
       });
     },
   });
+  const isAdmin=user?.publicMetadata?.role==='admin' || false;
   const isSaved = savedPosts?.data?.some((p) => p === post._id) || false;
   const deleteMutation = useMutation({
     mutationFn: async () => {
@@ -96,7 +97,7 @@ const PostMenuAction = ({ post }) => {
       )}
 
       {/* Delete Post Action */}
-      {user && user.username === post.user.username && (
+      {user && (user.username === post.user.username || isAdmin) && (
         <div
           className="flex items-center gap-3 py-2 text-sm cursor-pointer hover:bg-gray-200 rounded-md px-2 transition-colors"
           onClick={handleDelete}

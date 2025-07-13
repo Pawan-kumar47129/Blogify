@@ -66,6 +66,14 @@ export const createPost = asyncHandler(async (req, res) => {
 export const deletePost = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const clerkUserId=req.auth().userId;
+  if(!clerkUserId){
+    throw new ApiError(403, "You can delete only your post");
+  }
+  const role=req.auth().sessionClaims?.metadata?.role || "user";
+  if(role==="admin"){
+    await postModel.findByIdAndDelete(id);
+    return res.status(200).json(new ApiResponse(200,"post deleted successfully"));
+  }
   const user = await userModel.findOne({clerkUserId:clerkUserId});
   const post = await postModel.findOneAndDelete({ _id: id, user: user._id });
   if (!post) {

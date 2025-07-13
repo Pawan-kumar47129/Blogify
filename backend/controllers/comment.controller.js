@@ -36,13 +36,18 @@ export const addComment = asyncHandler(async (req, res) => {
 });
 
 export const deleteComment=asyncHandler(async(req,res)=>{
-    const {commentId}=req.params;
-    const clerkUserId = req.auth.userId;
+    const {id}=req.params;
+    const clerkUserId = req.auth().userId;
   if (!clerkUserId) {
-    throw new ApiError(400, "User is Not Authenticated!");
+    throw new ApiError(403, "User is Not Authenticated!");
+  }
+  const role=req.auth().sessionClaims?.metadata?.role || "user";
+  if(role==="admin"){
+    const comment=await commentModel.findByIdAndDelete(id);
+    return res.status(200).json(new ApiResponse(200,"comment deleted successfully",comment));
   }
   const user = await userModel.findOne({ clerkUserId });
-  const deletedComment=await commentModel.findOneAndDelete({_id:commentId,user:user._id});
+  const deletedComment=await commentModel.findOneAndDelete({_id:id,user:user._id});
   if(!deletedComment){
     throw new ApiError(403,"you can delete only your comment!");
   }
