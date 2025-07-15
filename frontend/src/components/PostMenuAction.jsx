@@ -8,7 +8,7 @@ const PostMenuAction = ({ post }) => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { getToken } = useAuth();
-  const queryClient=useQueryClient();
+  const queryClient = useQueryClient();
   const {
     error,
     isPending,
@@ -24,7 +24,7 @@ const PostMenuAction = ({ post }) => {
       });
     },
   });
-  const isAdmin=user?.publicMetadata?.role==='admin' || false;
+  const isAdmin = user?.publicMetadata?.role === "admin" || false;
   const isSaved = savedPosts?.data?.some((p) => p === post._id) || false;
   const deleteMutation = useMutation({
     mutationFn: async () => {
@@ -50,23 +50,53 @@ const PostMenuAction = ({ post }) => {
   const saveMutation = useMutation({
     mutationFn: async () => {
       const token = await getToken();
-      return axios.patch(`${import.meta.env.VITE_API_URL}/users/save`,{postId:post._id} ,{
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      return axios.patch(
+        `${import.meta.env.VITE_API_URL}/users/save`,
+        { postId: post._id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey:["savePosts"]})
+      queryClient.invalidateQueries({ queryKey: ["savePosts"] });
     },
     onError: (error) => {
       toast.error(error.respone.data);
     },
   });
-  const handleSave=()=>{
-    if(!user) navigate('/login');
+  const handleSave = () => {
+    if (!user) navigate("/login");
     saveMutation.mutate();
-  }
+  };
+
+  const featureMutation = useMutation({
+    mutationFn: async () => {
+      const token = await getToken();
+      return axios.patch(
+        `${import.meta.env.VITE_API_URL}/posts/feature`,
+        {
+          postId: post._id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["post", post.slug] });
+    },
+    onError: (error) => {
+      toast.error(error.respone.data);
+    },
+  });
+  const handleFeature = () => {
+    featureMutation.mutate();
+  };
   return (
     <div className="bg-gray-100 p-4 rounded-lg shadow-md">
       <h1 className="text-lg font-semibold text-gray-800 mb-4">Actions</h1>
@@ -76,7 +106,10 @@ const PostMenuAction = ({ post }) => {
       ) : error ? (
         "fetching failed"
       ) : (
-        <div className="flex items-center gap-3 py-2 text-sm cursor-pointer hover:bg-gray-200 rounded-md px-2 transition-colors" onClick={handleSave}>
+        <div
+          className="flex items-center gap-3 py-2 text-sm cursor-pointer hover:bg-gray-200 rounded-md px-2 transition-colors"
+          onClick={handleSave}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 48 48"
@@ -95,7 +128,30 @@ const PostMenuAction = ({ post }) => {
           {saveMutation.isPending && <span>is process</span>}
         </div>
       )}
-
+      {/* Feature Post Action */}
+      {isAdmin && (
+        <div
+          className="flex items-center gap-3 py-2 text-sm cursor-pointer hover:bg-yellow-100 rounded-md px-2 transition-colors border border-yellow-200 mt-2"
+          style={{ color: "#b45309" }}
+          onClick={handleFeature}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            width="20px"
+            height="20px"
+            className="text-yellow-500"
+          >
+            <path
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01z"
+              fill={post.isFeatured ? "black" : "none"}
+            />
+          </svg>
+          <span className="font-semibold">Feature this Post</span>
+          {featureMutation.isPending && <span>in process</span>}
+        </div>
+      )}
       {/* Delete Post Action */}
       {user && (user.username === post.user.username || isAdmin) && (
         <div

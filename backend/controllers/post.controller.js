@@ -40,7 +40,7 @@ export const getPost = asyncHandler(async (req, res) => {
 });
 
 export const createPost = asyncHandler(async (req, res) => {
-  const clerkUserId = req.auth().userId;;
+  const clerkUserId = req.auth().userId;
   if (!clerkUserId) {
     throw new ApiError(401, "user Unauthorized!");
   }
@@ -65,16 +65,18 @@ export const createPost = asyncHandler(async (req, res) => {
 
 export const deletePost = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const clerkUserId=req.auth().userId;
-  if(!clerkUserId){
+  const clerkUserId = req.auth().userId;
+  if (!clerkUserId) {
     throw new ApiError(403, "You can delete only your post");
   }
-  const role=req.auth().sessionClaims?.metadata?.role || "user";
-  if(role==="admin"){
+  const role = req.auth().sessionClaims?.metadata?.role || "user";
+  if (role === "admin") {
     await postModel.findByIdAndDelete(id);
-    return res.status(200).json(new ApiResponse(200,"post deleted successfully"));
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "post deleted successfully"));
   }
-  const user = await userModel.findOne({clerkUserId:clerkUserId});
+  const user = await userModel.findOne({ clerkUserId: clerkUserId });
   const post = await postModel.findOneAndDelete({ _id: id, user: user._id });
   if (!post) {
     throw new ApiError(403, "You can delete only your post");
@@ -94,3 +96,28 @@ export const uploadAuth = async (req, res) => {
   const result = imagekit.getAuthenticationParameters();
   res.send(result);
 };
+
+export const featurePost = asyncHandler(async (req, res) => {
+  const clerkUserId = req.auth().userId;
+  const postId = req.body.postId;
+  if (!clerkUserId) {
+    throw new ApiError(403, "You can delete only your post");
+  }
+  const role = req.auth().sessionClaims?.metadata?.role || "user";
+  if (role !== "admin") {
+    throw new ApiError(403, "You cannot feature post!");
+  }
+  const post = await postModel.findById(postId);
+  if (!post) {
+    throw new ApiError(404, "Post not found!");
+  }
+  const isFreatured = post.isFeatured;
+  const updatePost = await postModel.findByIdAndUpdate(
+    id,
+    { isFeatured: !isFreatured },
+    { new: true }
+  );
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "post featured successfully", updatePost));
+});
