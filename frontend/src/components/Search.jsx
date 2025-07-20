@@ -2,7 +2,7 @@ import React from 'react'
 
 const Search = () => {
   return (
-    <div className="bg-gray-100 p-3 rounded-full flex items-center gap-3 shadow-md focus-within:ring-2 focus-within:ring-blue-500 transition-all">
+    <div className="bg-gray-100 p-3 rounded-full flex items-center gap-3 shadow-md focus-within:ring-2 focus-within:ring-blue-500 transition-all w-full max-w-md mx-auto">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -18,7 +18,7 @@ const Search = () => {
       <input
         type="text"
         placeholder="Search a post..."
-        className="bg-transparent outline-none text-gray-700 placeholder-gray-500 w-full"
+        className="bg-transparent outline-none text-gray-700 placeholder-gray-500 w-full text-base px-2"
       />
     </div>
   )

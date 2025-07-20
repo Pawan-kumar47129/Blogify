@@ -5,7 +5,7 @@ import PostList from "../components/PostList";
 
 const Homepage = () => {
   return (
-    <div className="mt-8 flex flex-col gap-8 px-4 md:px-12 lg:px-24">
+    <div className="mt-8 flex flex-col gap-8 px-4 md:px-12 lg:px-24 max-w-7xl mx-auto">
       {/* BREADCRUMB */}
       <div className="flex gap-2 text-sm md:text-base text-gray-600">
         <Link to="/" className="hover:underline">
@@ -18,7 +18,7 @@ const Homepage = () => {
       {/* INTRODUCTION */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-8">
         {/* Titles */}
-        <div className="text-center md:text-left">
+        <div className="text-center md:text-left flex-1">
           <h1 className="text-gray-800 text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
             Discover Inspiring Stories and Ideas
           </h1>
@@ -71,15 +71,13 @@ const Homepage = () => {
       </div>
 
       {/* CATEGORIES */}
-
       <MainCategories />
 
       {/* FEATURED POSTS */}
-        <FeaturedPosts />
-      
+      <FeaturedPosts />
 
       {/* POST LIST */}
-      <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+      <div className="bg-gray-50 p-6 rounded-lg shadow-md w-full overflow-x-auto">
         <h1 className="my-8 text-2xl text-gray-600">Recent Posts</h1>
         <PostList />
       </div>

@@ -7,20 +7,55 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import ImageKit from "imagekit";
 import Post from "../models/post.model.js";
+import User from "../models/user.model.js";
 
 export const getPosts = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 2;
+  console.log(req.query);
+  const query={};
+  const cat=req.query.cat;
+  const author=req.query.author;
+  const searchQuery=req.query.search;
+  const sortQuery=req.query.sort;
+  const featured=req.query.featured;
+  if(cat)query.category=cat;
+  if(author){
+    const user=await User.findOne({username:author}).select("_id");
+    if(!user) return res.status(404).json(new ApiResponse(404,"No Post found!"));
+    query.user=user._id;
+  }
+  if(searchQuery) query.title={$regex:searchQuery,$option:'i'};
+  let sortObj={createdAt:-1};
+  if(sortQuery){
+    switch(sortQuery){
+      case "newest":
+        sortObj={createdAt:-1};
+        break;
+      case "oldest":
+        sortObj={createdAt:1};
+        break;
+      case "popular":
+        sortObj={visit:1};
+        break;
+      case "trending":
+        sortObj={visit:-1}
+        query.createdAt={
+          $gte:new Date(new Date().getTime-7*24*60*60*1000)
+        }
+        break;
+      
+    }
+  }
   const posts = await postModel
-    .find()
+    .find(query)
+    .sort(sortObj)
     .populate("user", "username")
     .limit(limit)
     .skip((page - 1) * limit);
   const totalPosts = await Post.countDocuments();
   const hashMore = page * limit < totalPosts;
-  if (posts.length == 0) {
-    throw new ApiError(404, "No posts found");
-  }
+  console.log(posts);
   return res
     .status(200)
     .json(new ApiResponse(200, "Posts get Successfully", { posts, hashMore }));

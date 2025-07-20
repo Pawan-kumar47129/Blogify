@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { IKImage } from "imagekitio-react";
 import { Link, NavLink } from "react-router";
 import {
   SignedIn,
@@ -7,55 +6,83 @@ import {
   UserButton,
 } from "@clerk/clerk-react";
 import Image from "./Image";
+
 function Navbar() {
   const [open, setOpen] = useState(false);
+
   return (
-    <div className="bg-white h-16 flex items-center justify-between px-4 md:px-8 lg:px-16 xl:px-32 shadow-md z-50 fixed top-0 w-full">
+    <nav className="bg-white h-16 flex items-center justify-between px-4 md:px-8 lg:px-16 xl:px-32 shadow-md z-50 fixed top-0 w-full">
       {/* Logo */}
-      <Link to="/">
-        <div className="flex items-center gap-2 text-2xl font-bold text-blue-800">
-          {/* <IKImage
-            urlEndpoint={import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT}
-            src="https://ik.imagekit.io/vbygr1pkk0/blog/logo.png?updatedAt=1745668908282"
-            className="w-10 h-10 rounded-full"
-            alt="logo"
-          /> */}
-          <Image src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
-            className="w-10 h-10 rounded-full"/>
-          <span>BlogApp</span>
-        </div>
+      <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-blue-800">
+        {/* <IKImage ... /> */}
+        <Image
+          src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
+          className="w-10 h-10 rounded-full"
+        />
+        <span>BlogApp</span>
       </Link>
 
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden text-2xl text-gray-700 focus:outline-none"
+        onClick={() => setOpen((prev) => !prev)}
+        aria-label="Toggle menu"
+      >
+        {open ? "✖" : "☰"}
+      </button>
+
       {/* Mobile Menu */}
-      <div className="md:hidden">
-        <div
-          className="cursor-pointer text-2xl text-gray-700"
-          onClick={() => setOpen((prev) => !prev)}
+      <div
+        className={`fixed top-16 left-0 w-full h-screen bg-gray-900 bg-opacity-90 flex flex-col items-center justify-center gap-8 text-xl font-medium text-white transition-all duration-300 z-40 ${
+          open ? "translate-x-0" : "-translate-x-full"
+        } md:hidden`}
+      >
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? "text-blue-400 font-semibold" : "hover:text-blue-400"
+          }
+          onClick={() => setOpen(false)}
         >
-          {open ? "✖" : "☰"}
-        </div>
-        {/* Mobile Link List */}
-        <div
-          className={`w-full h-screen flex flex-col items-center justify-center absolute transition-all ease-in-out top-16 bg-gray-800 text-white gap-8 text-xl font-medium ${
-            open ? "right-0" : "-right-full"
-          }`}
+          Home
+        </NavLink>
+        <NavLink
+          to="/trending"
+          className={({ isActive }) =>
+            isActive ? "text-blue-400 font-semibold" : "hover:text-blue-400"
+          }
+          onClick={() => setOpen(false)}
         >
-          <a href="/" className="hover:text-blue-400 transition-colors">
-            Home
-          </a>
-          <a href="/" className="hover:text-blue-400 transition-colors">
-            Trending
-          </a>
-          <a href="/" className="hover:text-blue-400 transition-colors">
-            Most Popular
-          </a>
-          <a href="/" className="hover:text-blue-400 transition-colors">
-            About
-          </a>
-          <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-            Login
-          </button>
-        </div>
+          Trending
+        </NavLink>
+        <NavLink
+          to="/popular"
+          className={({ isActive }) =>
+            isActive ? "text-blue-400 font-semibold" : "hover:text-blue-400"
+          }
+          onClick={() => setOpen(false)}
+        >
+          Most Popular
+        </NavLink>
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            isActive ? "text-blue-400 font-semibold" : "hover:text-blue-400"
+          }
+          onClick={() => setOpen(false)}
+        >
+          About
+        </NavLink>
+        <SignedOut>
+          <NavLink to="/login" onClick={() => setOpen(false)}>
+            <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+              Login
+            </button>
+          </NavLink>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </div>
 
       {/* Desktop Menu */}
@@ -69,7 +96,7 @@ function Navbar() {
           Home
         </NavLink>
         <NavLink
-          to="/"
+          to="/trending"
           className={({ isActive }) =>
             isActive ? "text-blue-500 font-semibold" : "hover:text-blue-500"
           }
@@ -77,7 +104,7 @@ function Navbar() {
           Trending
         </NavLink>
         <NavLink
-          to="/"
+          to="/popular"
           className={({ isActive }) =>
             isActive ? "text-blue-500 font-semibold" : "hover:text-blue-500"
           }
@@ -85,7 +112,7 @@ function Navbar() {
           Most Popular
         </NavLink>
         <NavLink
-          to="/"
+          to="/about"
           className={({ isActive }) =>
             isActive ? "text-blue-500 font-semibold" : "hover:text-blue-500"
           }
@@ -93,7 +120,7 @@ function Navbar() {
           About
         </NavLink>
         <SignedOut>
-          <NavLink to="login">
+          <NavLink to="/login">
             <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
               Login
             </button>
@@ -103,7 +130,7 @@ function Navbar() {
           <UserButton />
         </SignedIn>
       </div>
-    </div>
+    </nav>
   );
 }
 
