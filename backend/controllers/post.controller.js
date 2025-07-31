@@ -12,7 +12,6 @@ import User from "../models/user.model.js";
 export const getPosts = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 2;
-  console.log(req.query);
   const query={};
   const cat=req.query.cat;
   const author=req.query.author;
@@ -25,7 +24,7 @@ export const getPosts = asyncHandler(async (req, res) => {
     if(!user) return res.status(404).json(new ApiResponse(404,"No Post found!"));
     query.user=user._id;
   }
-  if(searchQuery) query.title={$regex:searchQuery,$option:'i'};
+  if(searchQuery) query.title={$regex:searchQuery,$options:'i'};
   let sortObj={createdAt:-1};
   if(sortQuery){
     switch(sortQuery){
@@ -44,7 +43,6 @@ export const getPosts = asyncHandler(async (req, res) => {
           $gte:new Date(new Date().getTime-7*24*60*60*1000)
         }
         break;
-      
     }
   }
   if(featured){
@@ -58,7 +56,6 @@ export const getPosts = asyncHandler(async (req, res) => {
     .skip((page - 1) * limit);
   const totalPosts = await Post.countDocuments(query);
   const hashMore = page * limit < totalPosts;
-  console.log(posts);
   return res
     .status(200)
     .json(new ApiResponse(200, "Posts get Successfully", { posts, hashMore }));

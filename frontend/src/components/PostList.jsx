@@ -25,8 +25,6 @@ const PostList = () => {
       getNextPageParam: (lastPage, pages) =>
         lastPage.data.hashMore ? pages.length + 1 : undefined,
     });
-
-  //if (status === "pending") return <Loading />;
   if (status === "error")
     return (
       <div className="text-center text-red-500 py-8">
@@ -35,8 +33,6 @@ const PostList = () => {
     );
 
   const allPosts = data?.pages?.flatMap((page) => page.data.posts) || [];
-  console.log(allPosts);
-
   return (
     <div className="w-full min-w-0">
       <InfiniteScroll
