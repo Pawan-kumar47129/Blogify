@@ -27,5 +27,5 @@ export const SavePost = asyncHandler(async (req, res) => {
       $pull: { savedPosts: postId },
     });
   }
-  res.status(200).json(isSaved ? "Post unsaved" : "post saved");
+  res.status(200).json(isSaved ? "post unsaved" : "post saved");
 });

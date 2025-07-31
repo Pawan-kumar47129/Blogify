@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import Search from "./Search";
 
 const MainCategories = () => {
   return (
@@ -44,7 +45,7 @@ const MainCategories = () => {
       </div>
       <span className="hidden xl:inline text-xl font-medium mx-4">|</span>
       {/* Search */}
-      <div className="bg-gray-100 p-2 rounded-full flex items-center gap-2 min-w-[180px]">
+      {/* <div className="bg-gray-100 p-2 rounded-full flex items-center gap-2 min-w-[180px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -62,7 +63,8 @@ const MainCategories = () => {
           className="bg-transparent outline-none text-gray-700 w-32 md:w-40"
           // onKeyDown={handleKeyPress}
         />
-      </div>
+      </div> */}
+      <Search/>
     </div>
   );
 };

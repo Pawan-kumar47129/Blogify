@@ -1,5 +1,5 @@
 import express from "express"
-import { getUserSavedPosts, SavePost } from "../controllers/userController.js";
+import { getUserSavedPosts, SavePost } from "../controllers/user.controller.js";
 
 const router =express.Router({mergeParams:true});
 

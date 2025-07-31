@@ -26,7 +26,7 @@ const PostList = () => {
         lastPage.data.hashMore ? pages.length + 1 : undefined,
     });
 
-  if (status === "pending") return <Loading />;
+  //if (status === "pending") return <Loading />;
   if (status === "error")
     return (
       <div className="text-center text-red-500 py-8">
@@ -35,6 +35,7 @@ const PostList = () => {
     );
 
   const allPosts = data?.pages?.flatMap((page) => page.data.posts) || [];
+  console.log(allPosts);
 
   return (
     <div className="w-full min-w-0">
@@ -49,7 +50,7 @@ const PostList = () => {
         }
         endMessage={
           <p className="text-center text-gray-500 py-4">
-            <b>All posts loaded!</b>
+            {allPosts.length>0 && <b>All posts loaded!</b>}
           </p>
         }
       >

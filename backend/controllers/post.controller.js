@@ -47,13 +47,16 @@ export const getPosts = asyncHandler(async (req, res) => {
       
     }
   }
+  if(featured){
+    query.isFeatured=true
+  }
   const posts = await postModel
     .find(query)
     .sort(sortObj)
     .populate("user", "username")
     .limit(limit)
     .skip((page - 1) * limit);
-  const totalPosts = await Post.countDocuments();
+  const totalPosts = await Post.countDocuments(query);
   const hashMore = page * limit < totalPosts;
   console.log(posts);
   return res

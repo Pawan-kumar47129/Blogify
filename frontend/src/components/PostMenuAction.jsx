@@ -17,6 +17,7 @@ const PostMenuAction = ({ post }) => {
     queryKey: ["savePosts"],
     queryFn: async () => {
       const token = await getToken();
+      if(!token) return [];
       return axios.get(`${import.meta.env.VITE_API_URL}/users/saved`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -69,7 +70,7 @@ const PostMenuAction = ({ post }) => {
   });
   const handleSave = () => {
     if (!user) navigate("/login");
-    saveMutation.mutate();
+    else saveMutation.mutate();
   };
 
   const featureMutation = useMutation({

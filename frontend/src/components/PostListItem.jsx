@@ -7,13 +7,6 @@ const PostListItem = ({ post }) => {
     <div className="flex flex-col xl:flex-row gap-8 w-full">
       {/* Image */}
       {post.img && (
-        // <div className="w-full md:w-auto xl:w-1/3 flex-shrink-0">
-        //   <img
-        //     className="w-full h-48 md:h-72 xl:h-64 object-cover rounded-lg shadow-sm"
-        //     src={post.img}
-        //     alt={post.title}
-        //   />
-        // </div>
         <div className="w-full xl:w-1/3 flex-shrink-0">
           <img
             src={post.img}
@@ -29,7 +22,7 @@ const PostListItem = ({ post }) => {
         </p>
         <div className="flex flex-wrap items-center gap-2 text-gray-400 text-sm">
           <span>Written by</span>
-          <Link className="text-blue-400">{post.user.username}</Link>
+          <Link className="text-blue-400" to={`/posts?author=${post.user.username}`}>{post.user.username}</Link>
           <span>on</span>
           <Link className="text-blue-400">{post.category}</Link>
           <span>{format(post.createdAt)}</span>
