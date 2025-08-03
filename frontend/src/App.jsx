@@ -8,6 +8,7 @@ import Write from "./routes/Write";
 import LoginPage from "./routes/LoginPage";
 import RegisterPage from "./routes/RegisterPage";
 import PageNotFound from "./routes/PageNotFound";
+import AboutPage from "./routes/AboutPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="posts" element={<PostListPage/>}/>
         <Route path="posts/:slug" element={<SinglePostPage/>}/>
+        <Route path="about" element={<AboutPage/>}/>
         <Route path="write" element={<Write/>}/>
         <Route path="login" element={<LoginPage/>}/>
         <Route path="register" element={<RegisterPage/>}/>

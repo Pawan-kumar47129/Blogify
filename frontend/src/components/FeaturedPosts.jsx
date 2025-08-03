@@ -1,5 +1,3 @@
-import React from "react";
-import Image from "./Image";
 import { Link } from "react-router";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
