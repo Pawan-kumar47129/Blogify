@@ -30,7 +30,7 @@ A modern, full-stack blogging platform built with React, Node.js, Express, and M
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/Pawan-kumar47129/Blogify
-   cd blogapp
+   cd Blogify
    ```
 
 2. **Install dependencies:**
@@ -75,7 +75,7 @@ A modern, full-stack blogging platform built with React, Node.js, Express, and M
 ## Folder Structure
 
 ```
-docker-project/
+Blogify/
 ├── backend/
 │   ├── controllers/
 │   ├── models/
