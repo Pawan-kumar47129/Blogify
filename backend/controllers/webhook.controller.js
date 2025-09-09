@@ -21,9 +21,9 @@ export const clerkWebHook=asyncHandler(async(req,res)=>{
         try {
             const user=new userModel({
                 clerkUserId:event.data.id,
-                username:event.data.username||event.data.firstName || event.data.email_addresses[0].email_address,
-                email:event.data.email_addresses[0].email_address,
-                img:event.data.image_url
+                username:event.data.username||event.data?.firstName || event.data?.email_addresses[0]?.email_address,
+                email:event.data?.email_addresses[0]?.email_address,
+                img:event.data?.image_url
             });
             const response=await user.save();
             console.log(response);
