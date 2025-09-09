@@ -13,7 +13,7 @@ export const clerkWebHook=asyncHandler(async(req,res)=>{
     let event;
     try {
         event = await webhook.verify(payload, headers);
-        console.log(event.data);
+        // console.log(event.data);
     } catch (err) {
         throw new ApiError(400,"Webhook varification failed!")
     }

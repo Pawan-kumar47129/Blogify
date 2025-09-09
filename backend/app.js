@@ -21,7 +21,12 @@ app.use(function(req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
+app.get("/",(req,res)=>{
+  res.json({
+    message:"server is running fine",
+    stausCode:200
+  })
+})
 //router
 
 import userRouter from "./routes/user.route.js"
