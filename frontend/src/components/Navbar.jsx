@@ -19,7 +19,7 @@ function Navbar() {
           src="https://ik.imagekit.io/vbygr1pkk0/recipes/panir_uVV8TFKjy.jpg?updatedAt=1745990236849"
           className="w-10 h-10 rounded-full"
         />
-        <span>BlogApp</span>
+        <span>Blogify</span>
       </Link>
 
       {/* Mobile Menu Button */}
