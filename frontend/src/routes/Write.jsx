@@ -39,7 +39,7 @@ const Write = () => {
     },
     onSuccess: (res) => {
       toast.success(res.data.message);
-      navigate(`/${res.data.data.slug}`);
+      navigate(`/posts/${res.data.data.slug}`);
     },
     onError: (error) => {
       toast.error(error.message);
